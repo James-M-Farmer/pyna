@@ -3,7 +3,7 @@ import requests
 
 def main():
     # HTTP GET the dataset
-    satellites = requests.get("http://www.celestrak.com/NORAD/elements/active.txt")
+    satellites = requests.get("http://www.celestrak.com/NORAD/elements/dmc.txt")
 
     # the data was returned as a single string
     # split the data across "\r\n" boundaries
@@ -31,18 +31,17 @@ def main():
 
     # display the list of satellites
     print(satellitenames)
-    with open ("satellites_names.txt", "w") as f:
+    with open ("DM_satellites_names.txt", "w") as f:
         new_lined_sats = [f"{sat}\n" for sat in satellitenames]
         f.writelines(new_lined_sats)
-    
+
     with open ("satellites_names.txt", "r") as f2:
         txt = f2.read()
         txt_lines = txt.splitlines()
         print(len(txt_lines))
-    
+
     # display some stats
     print(f"\nThe number of satellites tracked is {len(satellitenames)}")
 
 if __name__ == "__main__":
     main()
-

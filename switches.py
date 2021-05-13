@@ -35,11 +35,9 @@ def update_sw_conf(sw):
     conn.execute(f"UPDATE switches SET valid_config = '{valid}' where hostname = '{sw}'")
     conn.commit()
 
-update_sw_conf('sw-2')
-
 def comply(sw):
     driver = get_network_driver('eos')
-    device = driver('sw-1', 'admin', 'alta3')
+    device = driver(sw, 'admin', 'alta3')
     device.open()
     complies = device.compliance_report(f"/home/student/pyna/{sw}_validate01.yml")
     device.close()
@@ -49,6 +47,6 @@ def comply(sw):
         compliant = False
     return compliant
 
-(update_sw_conf('sw-1'))
+update_sw_conf('sw-1')
 
 

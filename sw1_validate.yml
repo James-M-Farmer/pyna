@@ -1,0 +1,11 @@
+---
+- get_facts:
+    os_version: 4.22.0F-12170486.4220F
+
+- get_interfaces_ip:
+    Management1:
+      ipv4:
+        10.0.41.35:
+          prefix_length: 12
+          _mode: strict
+

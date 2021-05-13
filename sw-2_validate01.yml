@@ -1,0 +1,21 @@
+---
+- get_facts:
+    os_version: 4.22.0F-12170486.4220F
+    hostname: sw2
+
+- get_interfaces_ip:
+    Management1:
+      ipv4:
+        10.12.190.200:
+          prefix_length: 12
+          _mode: strict
+
+- ping:
+    _name: ping_google
+    _kwargs:
+      destination: 8.8.8.8
+      source: 10.12.190.200
+    success:
+      packet_loss: 0
+    _mode: strict
+    

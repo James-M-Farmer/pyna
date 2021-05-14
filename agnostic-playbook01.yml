@@ -1,0 +1,34 @@
+---
+- name: Using cli_command agnostic modules
+  hosts: arista_switches
+  gather_facts: false
+  connection: network_cli    # required for ansible to use CLI over SSH
+  become: yes                # run with privilege
+  become_method: enable      # use in place of "sudo"
+
+  vars:
+          ansible_ssh_pass: alta3
+
+  tasks:
+          - name: run multiple commands on remote nodes
+            ansible.netcommon.cli_command:
+                    command: "{{ item }}"    # item is replaced by the next up in the list
+            loop:
+                    - show interfaces
+                    - show ip interface Management1
+            register: results     # variable to register with JSON response to eos_command module
+                                  # results of both commands are stored in this var "results"
+
+          - name: take a peek as to what is inside of "results"
+            debug:
+                    var: results
+
+          - name: take a peek at "just" the JSON returned to the command "show interfaces"
+            debug:
+                    var: results.results[0]
+
+          - name: take a peek at "just" the JSON returned to the command "show ip"
+            debug:
+                    var: results.results[1]
+
+
